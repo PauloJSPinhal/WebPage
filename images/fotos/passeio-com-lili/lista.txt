@@ -1,0 +1,4 @@
+imagem01.jpg
+imagem02.jpg
+imagem03.jpg
+lista.txt

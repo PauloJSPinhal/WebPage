@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paulo Pinhal | Portfolio & Projetos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para ícones de Redes Sociais -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Custom CSS baseado na imagem fornecida -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGAÇÃO -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <div class="logo-placeholder me-2">
+                    <i class="fa-solid fa-camera-retro"></i>
+                </div>
+                <span>Pinhality</span>
+            </a>
+            <button class="navbar-toggler navbar-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link-custom active" href="#inicio">Início</a></li>
+                    <li class="nav-item"><a class="nav-link-custom" href="#" data-target="ensino">Ensino EVT</a></li>
+                    <li class="nav-item"><a class="nav-link-custom" href="#" data-target="engenharia">Engenharia</a></li>
+                    <li class="nav-item"><a class="nav-link-custom" href="#" data-target="fotografia">Fotografia</a></li>
+                    <li class="nav-item"><a class="nav-link-custom" href="#" data-target="cultura">Cultura & Hobbies</a></li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn-login" href="#contacto"><i class="fa-solid fa-envelope me-2"></i>Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MENSAGEM DE BOAS-VINDAS -->
+    <header id="inicio" class="hero-section text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">Bem-vindo ao meu espaço digital</h1>
+            <p class="lead text-muted mx-auto" style="max-width: 700px;">
+                Olá! Sou o Paulo Pinhal. Aqui partilho as minhas várias vertentes profissionais e criativas: desde a docência em EVT e projetos de Engenharia Eletrotécnica, até à paixão pela Fotografia, Cinema e Música.
+            </p>
+        </div>
+    </header>
+
+    <!-- CAROUSEL / SLIDESHOW -->
+    <section class="carousel-section container mb-5">
+    <div id="portfolioCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#portfolioCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#portfolioCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#portfolioCarousel" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#portfolioCarousel" data-bs-slide-to="3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-target="ensino">
+                <img src="images/evt.webp" class="d-block w-100" alt="Trabalhos de EVT">
+                <div class="slide-overlay d-flex flex-column justify-content-end p-4">
+                    <h3>Ensino de EVT</h3>
+                    <p>Educação Visual e Tecnológica para o 2º Ciclo.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-target="engenharia">
+                <img src="images/engenharia.webp" class="d-block w-100" alt="Trabalhos de Engenharia">
+                <div class="slide-overlay d-flex flex-column justify-content-end p-4">
+                    <h3>Engenharia Eletrotécnica</h3>
+                    <p>Projetos de Instalações Elétricas e Telecomunicações (ITED).</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-target="fotografia">
+                <img src="images/fotografia.webp" class="d-block w-100" alt="Trabalhos de Fotografia">
+                <div class="slide-overlay d-flex flex-column justify-content-end p-4">
+                    <h3>Fotografia</h3>
+                    <p>A minha visão do mundo através das lentes.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-target="cultura">
+                <img src="images/cultura.webp" class="d-block w-100" alt="Trabalhos de Cultura">
+                <div class="slide-overlay d-flex flex-column justify-content-end p-4">
+                    <h3>Cultura e Interesses</h3>
+                    <p>Cinema clássico, Rock, Metal e referências inspiradoras.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</section>
+
+    <!-- SECÇÕES EXPANSÍVEIS (ACORDION / LINHAS DINÂMICAS) -->
+    <main class="container my-5">
+
+        <!-- Secção 1: Ensino EVT -->
+        <div class="section-row" id="row-ensino">
+            <div class="section-header" data-target="ensino">
+                <span class="section-title"><i class="fa-solid fa-graduation-cap me-3"></i>Ensino de EVT</span>
+                <i class="fa-solid fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="section-content" id="content-ensino">
+                <!-- O conteúdo dinâmico do ficheiro html/ensino.html será injetado aqui -->
+            </div>
+        </div>
+
+        <!-- Secção 2: Engenharia -->
+        <div class="section-row" id="row-engenharia">
+            <div class="section-header" data-target="engenharia">
+                <span class="section-title"><i class="fa-solid fa-bolt me-3"></i>Engenharia Eletrotécnica & Telecomunicações</span>
+                <i class="fa-solid fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="section-content" id="content-engenharia">
+                <!-- O conteúdo dinâmico será injetado aqui -->
+            </div>
+        </div>
+
+        <!-- Secção 3: Fotografia -->
+        <div class="section-row" id="row-fotografia">
+            <div class="section-header" data-target="fotografia">
+                <span class="section-title"><i class="fa-solid fa-camera me-3"></i>Fotografia (Hobby)</span>
+                <i class="fa-solid fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="section-content" id="content-fotografia">
+                <!-- O conteúdo dinâmico será injetado aqui -->
+            </div>
+        </div>
+
+        <!-- Secção 4: Cultura -->
+        <div class="section-row" id="row-cultura">
+            <div class="section-header" data-target="cultura">
+                <span class="section-title"><i class="fa-solid fa-film me-3"></i>Cultura, Cinema & Música</span>
+                <i class="fa-solid fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="section-content" id="content-cultura">
+                <!-- O conteúdo dinâmico será injetado aqui -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- SECÇÃO DE CONTACTO COM FORMULÁRIO -->
+    <section id="contacto" class="contact-section container my-5">
+    <div class="contact-card p-4 p-md-5">
+        <h2 class="text-center mb-4"><i class="fa-solid fa-paper-plane me-2"></i>Entrar em Contacto</h2>
+        <form id="contactForm" novalidate>
+            <div class="mb-4">
+                <label class="form-label d-block fw-bold mb-3">Selecione o Assunto (Obrigatório):</label>
+                <div class="row g-3">
+                    <div class="col-sm-6 col-md-3">
+                        <input class="form-check-input-custom d-none" type="radio" name="assuntoCategoria" id="radioEnsino" value="Ensino EVT" required>
+                        <label class="form-check-label-custom w-100 text-center" for="radioEnsino">Ensino EVT</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input class="form-check-input-custom d-none" type="radio" name="assuntoCategoria" id="radioEngenharia" value="Engenharia">
+                        <label class="form-check-label-custom w-100 text-center" for="radioEngenharia">Engenharia</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input class="form-check-input-custom d-none" type="radio" name="assuntoCategoria" id="radioFotografia" value="Fotografia">
+                        <label class="form-check-label-custom w-100 text-center" for="radioFotografia">Fotografia</label>
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input class="form-check-input-custom d-none" type="radio" name="assuntoCategoria" id="radioOutro" value="Outro/Geral">
+                        <label class="form-check-label-custom w-100 text-center" for="radioOutro">Outro / Geral</label>
+                    </div>
+                </div>
+                <div class="invalid-feedback text-center mt-2 d-none" id="radioError">Por favor, selecione uma das categorias do assunto.</div>
+            </div>
+            <div class="mb-3">
+                <label for="emailInput" class="form-label fw-bold">O Seu Endereço de Email:</label>
+                <input type="email" class="form-control form-control-custom" id="emailInput" placeholder="exemplo@email.com" required>
+                <div class="invalid-feedback">Por favor, insira um e-mail válido.</div>
+            </div>
+            <div class="mb-4">
+                <label for="mensagemInput" class="form-label fw-bold">Mensagem / Detalhe do Assunto:</label>
+                <textarea class="form-control form-control-custom" id="mensagemInput" rows="5" placeholder="Escreva aqui a sua mensagem..." required></textarea>
+                <div class="invalid-feedback">Por favor, preencha o campo do assunto/mensagem.</div>
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn-submit px-5 py-2"><i class="fa-solid fa-paper-plane me-2"></i>Enviar Mensagem</button>
+            </div>
+        </form>
+        <div class="alert alert-success mt-4 d-none" id="formSuccessAlert" role="alert">Formulário validado com sucesso!</div>
+    </div>
+</section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container text-center">
+            <div class="social-links mb-3">
+                <a href="https://www.facebook.com" target="_blank" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+            <p class="mb-0">&copy; 2024 Paulo Pinhal. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts Obrigatórios: jQuery primeiro, depois Bootstrap e script customizado -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
