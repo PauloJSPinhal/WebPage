@@ -1,6 +1,5 @@
-$(document).ready(function() {
+ $(document).ready(function() {
 
-    // Configuração das Secções e respetivos caminhos de ficheiro externo
     const sections = {
         'ensino': 'html/ensino.html',
         'engenharia': 'html/engenharia.html',
@@ -8,25 +7,20 @@ $(document).ready(function() {
         'cultura': 'html/cultura.html'
     };
 
-    // Estado para controlar se uma secção já foi carregada via AJAX
     const loadedSections = {};
 
-    // Função centralizada para abrir uma secção
-    // Função centralizada para abrir uma secção
     function openSection(targetId) {
         const $row = $('#row-' + targetId);
         const $content = $('#content-' + targetId);
 
-        // Se já estiver aberta, foca apenas o scroll nela
         if ($row.hasClass('is-open')) {
             scrollToElement($row);
             return;
         }
 
-        // Fecha todas as outras secções abertas
+        // Fecha outras secções abertas
         $('.section-row.is-open').removeClass('is-open').find('.section-content').slideUp(300);
 
-        // Verifica se precisa de carregar o conteúdo via AJAX
         if (!loadedSections[targetId]) {
             $content.html('<div class="text-center p-4"><div class="spinner-border text-primary" role="status"></div><p class="mt-2 text-muted">A carregar conteúdo...</p></div>');
             $row.addClass('is-open');
@@ -39,95 +33,90 @@ $(document).ready(function() {
                 success: function(data) {
                     $content.html(data);
                     
-                    // Carrega o script apenas uma vez
-                    if (!document.getElementById('script-galeria')) {
-                        const script = document.createElement('script');
-                        script.id = 'script-galeria';
-                        script.src = './scripts/fotografias.js';
-                        script.onload = () => {
-                            const container = document.getElementById('content-fotografia');
-                            if (container) window.carregarGaleria(container);
-                        };
-                        document.head.appendChild(script);
-                    } else {
-                        const container = document.getElementById('content-fotografia');
-                        if (container) window.carregarGaleria(container);
+                    // Marca como carregada para não repetir o AJAX da próxima vez
+                    loadedSections[targetId] = true;
+
+                    // Se for a fotografia, inicializa TODAS as galerias que existirem
+                    if (targetId === 'fotografia') {
+                        // querySelectorAll vai buscar TODAS as divs com essa classe
+                        const containers = document.querySelectorAll('#content-fotografia .galeria-container');
+                        containers.forEach(container => {
+                            if (window.carregarGaleria) {
+                                window.carregarGaleria(container);
+                            }
+                        });
                     }
+
+                    // Ativa os botões de fechar e voltar ao topo
+                    bindActionButtons(targetId);
+                },
+                error: function() {
+                    $content.html('<p class="text-danger text-center p-3">Erro ao carregar a secção.</p>');
                 }
             });
         } else {
-            // Se já estava carregada, apenas abre
+            // Se já foi carregada antes, apenas abre
             $row.addClass('is-open');
             $content.slideDown(400);
             scrollToElement($row);
         }
     }
 
-    // Função para fechar uma secção específica
     function closeSection(targetId) {
         const $row = $('#row-' + targetId);
         $row.removeClass('is-open');
         $('#content-' + targetId).slideUp(300);
-        
-        // Remove active do menu superior correspondente
         $(`.nav-link-custom[data-target="${targetId}"]`).removeClass('active');
-        $('.nav-link-custom').first().addClass('active'); // Volta a ativar o "Início"
+        $('.nav-link-custom').first().addClass('active');
     }
 
-    // Vincula ações aos botões Internos das secções carregadas
     function bindActionButtons(targetId) {
-        // Botão Fechar Secção
-        $('#content-' + targetId).on('click', '.btn-action-close', function() {
+        $('#content-' + targetId).off('click', '.btn-action-close').on('click', '.btn-action-close', function() {
             closeSection(targetId);
             scrollToElement($('#row-' + targetId));
         });
 
-        // Botão Voltar ao Topo
-        $('#content-' + targetId).on('click', '.btn-action-top', function() {
+        $('#content-' + targetId).off('click', '.btn-action-top').on('click', '.btn-action-top', function() {
             $('html, body').animate({ scrollTop: 0 }, 400);
         });
     }
 
-    // Auxiliar para scroll suave até ao elemento
     function scrollToElement($element) {
         $('html, body').animate({
             scrollTop: $element.offset().top - 90
         }, 400);
     }
 
-    // HIPÓTESE A: Clicar sobre a linha (Header da secção)
+    // Clicar no Header da Secção
     $('.section-header').on('click', function() {
         const target = $(this).data('target');
-        const $row = $('#row-' + target);
-        
-        if ($row.hasClass('is-open')) {
+        if ($('#row-' + target).hasClass('is-open')) {
             closeSection(target);
         } else {
             openSection(target);
         }
     });
 
-    // HIPÓTESE B: Clicar nos links do Menu Superior
+    // Clicar nos links do Menu Superior
     $('.nav-link-custom[data-target]').on('click', function(e) {
         e.preventDefault();
         const target = $(this).data('target');
+        $('.nav-link-custom').removeClass('active');
+        $(this).addClass('active');
         openSection(target);
     });
 
-    // HIPÓTESE C: Clicar num slide do Carousel
+    // Clicar num slide do Carousel
     $('.carousel-item').on('click', function() {
         const target = $(this).data('target');
         openSection(target);
     });
 
-
-    // --- VALIDAÇÃO DO FORMULÁRIO DE CONTACTO ---
+    // Validação do Formulário de Contacto
     $('#contactForm').on('submit', function(e) {
         e.preventDefault();
-        
         let isValid = true;
         
-        // 1. Validar Radio Button (Categoria do Assunto)
         const radioChecked = $('input[name="assuntoCategoria"]:checked').val();
         if (!radioChecked) {
             $('#radioError').removeClass('d-none');
@@ -136,7 +125,6 @@ $(document).ready(function() {
             $('#radioError').addClass('d-none');
         }
 
-        // 2. Validar Email (HTML5 validation builtin + check)
         const emailInput = $('#emailInput')[0];
         if (!emailInput.checkValidity()) {
             $(emailInput).addClass('is-invalid');
@@ -145,7 +133,6 @@ $(document).ready(function() {
             $(emailInput).removeClass('is-invalid').addClass('is-valid');
         }
 
-        // 3. Validar Campo de Texto do Assunto/Mensagem
         const mensagemInput = $('#mensagemInput').val().trim();
         if (mensagemInput === '') {
             $('#mensagemInput').addClass('is-invalid');
@@ -154,17 +141,14 @@ $(document).ready(function() {
             $('#mensagemInput').removeClass('is-invalid').addClass('is-valid');
         }
 
-        // Se tudo estiver correto, mostra alerta de sucesso
         if (isValid) {
             $('#formSuccessAlert').removeClass('d-none');
-            // Aqui seria feito o envio real AJAX se necessário
-            // ex: this.submit(); ou $.post(...);
         } else {
             $('#formSuccessAlert').addClass('d-none');
         }
     });
 
-    // Limpar avisos de erro enquanto o utilizador preenche
+    // Limpar avisos de erro
     $('input[name="assuntoCategoria"]').on('change', function() {
         $('#radioError').addClass('d-none');
     });
@@ -174,4 +158,3 @@ $(document).ready(function() {
         }
     });
 });
-

@@ -4,7 +4,7 @@ let currentPhotosArray = [];
 let currentIdx = 0;
 let currentPasta = "";
 
-export function openLightbox(index, photosArray, pasta) {
+function openLightbox(index, photosArray, pasta) {
     currentPhotosArray = photosArray;
     currentPasta = pasta;
     currentIdx = index;
@@ -13,47 +13,71 @@ export function openLightbox(index, photosArray, pasta) {
     document.getElementById('lightbox').style.display = 'flex';
 }
 
-export function closeLightbox() {
+function closeLightbox() {
     document.getElementById('lightbox').style.display = 'none';
 }
 
-export function changePhoto(step) {
+function changePhoto(step) {
     currentIdx = (currentIdx + step + currentPhotosArray.length) % currentPhotosArray.length;
     const lightboxImg = document.getElementById('lightbox-img');
     lightboxImg.src = currentPasta + currentPhotosArray[currentIdx];
 }
 
-// Tornar as funções acessíveis pelo HTML (via onclick)
+// Tornar as funções acessíveis globalmente (para os botões do HTML)
 window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 window.changePhoto = changePhoto;
 
 function carregarGaleria(container) {
-    // Caminho fixo para evitar erros de leitura de atributos
-    const listaUrl = "/webpage/images/fotos/lista.txt";
-    const pastaOrigem = "/webpage/images/fotos/";
+    const listaUrl = container.getAttribute('data-lista');
+    const pastaOrigem = container.getAttribute('data-pasta');
 
-    container.innerHTML = '<p>A carregar fotos...</p>';
+    if (!listaUrl || !pastaOrigem) {
+        container.innerHTML = '<p class="text-danger">Erro: Falta definir data-lista ou data-pasta no HTML.</p>';
+        return;
+    }
+
+    container.innerHTML = '<p class="text-center text-muted mt-3">A carregar fotos...</p>';
 
     fetch(listaUrl + '?t=' + new Date().getTime())
         .then(response => {
-            if (!response.ok) throw new Error("Erro 404: Ficheiro não encontrado");
+            if (!response.ok) throw new Error("Erro ao carregar a lista de fotos");
             return response.text();
         })
         .then(texto => {
             const itens = texto.split('\n').filter(i => i.trim() !== "");
-            container.innerHTML = '<div class="row g-3 gallery"></div>';
+            
+            // NOVA LÓGICA: Criar o cabeçalho se existirem os atributos
+            let headerHTML = '';
+            const titulo = container.getAttribute('data-titulo');
+            const descricao = container.getAttribute('data-descricao');
+            
+            if (titulo || descricao) {
+                headerHTML += '<div class="gallery-header">';
+                if (titulo) headerHTML += `<h4>${titulo}</h4>`;
+                if (descricao) headerHTML += `<p>${descricao}</p>`;
+                headerHTML += '</div>';
+            }
+
+            // O innerHTML agora inclui o cabeçalho (se existir) + a div das fotos
+            container.innerHTML = headerHTML + '<div class="row g-3 gallery"></div>';
+            
             const gallery = container.querySelector('.gallery');
             
             itens.forEach((item, index) => {
                 const div = document.createElement('div');
-                div.className = "col-md-4";
-                // Exemplo de como manter o seu onclick original:
-                div.innerHTML = `
-                    <img src="${pastaOrigem}${item}" 
-                         class="img-fluid rounded" 
-                         style="cursor:pointer;"
-                         onclick="openLightbox(${index}, ${JSON.stringify(itens).replace(/"/g, "'")}, '${pastaOrigem}')">`;
+                div.className = "col-md-4 col-sm-6";
+                
+                const img = document.createElement('img');
+                img.src = pastaOrigem + item;
+                img.className = "img-fluid rounded";
+                img.style.cursor = "pointer";
+                
+                img.addEventListener('click', () => {
+                    openLightbox(index, itens, pastaOrigem);
+                });
+
+                div.appendChild(img);
                 gallery.appendChild(div);
             });
         })
@@ -61,3 +85,6 @@ function carregarGaleria(container) {
             container.innerHTML = `<p class="text-danger">${err.message}</p>`;
         });
 }
+
+// Tornar a função de carregar acessível ao main.js
+window.carregarGaleria = carregarGaleria;
