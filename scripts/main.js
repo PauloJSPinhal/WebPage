@@ -12,6 +12,7 @@ $(document).ready(function() {
     const loadedSections = {};
 
     // Função centralizada para abrir uma secção
+    // Função centralizada para abrir uma secção
     function openSection(targetId) {
         const $row = $('#row-' + targetId);
         const $content = $('#content-' + targetId);
@@ -22,7 +23,7 @@ $(document).ready(function() {
             return;
         }
 
-        // Fecha todas as outras secções abertas antes de abrir a nova (comportamento limpo)
+        // Fecha todas as outras secções abertas
         $('.section-row.is-open').removeClass('is-open').find('.section-content').slideUp(300);
 
         // Verifica se precisa de carregar o conteúdo via AJAX
@@ -37,26 +38,29 @@ $(document).ready(function() {
                 dataType: 'html',
                 success: function(data) {
                     $content.html(data);
-                    loadedSections[targetId] = true;
-                    // Adiciona os event listeners aos novos botões de ação injetados dinamicamente
-                    bindActionButtons(targetId);
-                    scrollToElement($row);
-                },
-                error: function() {
-                    $content.html('<div class="alert alert-danger">Erro ao carregar o conteúdo da secção. Por favor, tente novamente.</div>');
+                    
+                    // Carrega o script apenas uma vez
+                    if (!document.getElementById('script-galeria')) {
+                        const script = document.createElement('script');
+                        script.id = 'script-galeria';
+                        script.src = './scripts/fotografias.js';
+                        script.onload = () => {
+                            const container = document.getElementById('content-fotografia');
+                            if (container) window.carregarGaleria(container);
+                        };
+                        document.head.appendChild(script);
+                    } else {
+                        const container = document.getElementById('content-fotografia');
+                        if (container) window.carregarGaleria(container);
+                    }
                 }
             });
         } else {
-            // Se já foi previamente carregada, apenas abre com animação
+            // Se já estava carregada, apenas abre
             $row.addClass('is-open');
-            $content.slideDown(400, function() {
-                scrollToElement($row);
-            });
+            $content.slideDown(400);
+            scrollToElement($row);
         }
-
-        // Sincroniza o estado ativo no menu superior
-        $('.nav-link-custom').removeClass('active');
-        $(`.nav-link-custom[data-target="${targetId}"]`).addClass('active');
     }
 
     // Função para fechar uma secção específica
@@ -170,3 +174,4 @@ $(document).ready(function() {
         }
     });
 });
+
