@@ -39,7 +39,7 @@
                     // Se for a fotografia, inicializa TODAS as galerias que existirem
                     if (targetId === 'fotografia') {
                         // querySelectorAll vai buscar TODAS as divs com essa classe
-                        const containers = document.querySelectorAll('#content-fotografia .galeria-container');
+                                                const containers = document.querySelectorAll('#content-fotografia .master-galeria-container');
                         containers.forEach(container => {
                             if (window.carregarGaleria) {
                                 window.carregarGaleria(container);

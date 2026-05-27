@@ -30,15 +30,18 @@ body {
     letter-spacing: 0.5px;
 }
 .logo-placeholder {
-    background: linear-gradient(135deg, #2563eb, #10b981);
     width: 32px;
     height: 32px;
-    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 0.9rem;
+    /* Remova o border-radius ou background se não quiser que fiquem visíveis por trás da imagem */
+    background: transparent !important;
+}
+.logo-placeholder img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; /* Isto evita a distorção */
 }
 .nav-link-custom {
     color: #94a3b8;
