@@ -210,7 +210,15 @@ body {
     padding: 20px;
     height: 100%;
 }
-
+.content-box .text-muted {
+    color: #cbd5e1 !important; /* Cinza claro que lê perfeitamente no fundo escuro */
+}
+/* Dá um pouco de respiro entre as linhas da lista para não ficar amontoado */
+.content-box ol li, 
+.content-box ul li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
 /* Formulário de Contacto */
 .contact-section {
     margin-top: 80px;
@@ -334,4 +342,249 @@ footer {
     margin-bottom: 0;
     line-height: 1.6;
     font-size: 0.95rem;
+}
+/* =========================================
+   MOTOR DE CONTEÚDOS DINÂMICOS
+   ========================================= */
+/* --- Acordeão dos Módulos de Conteúdo --- */
+.conteudo-group-header {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between; /* Olho vai para a direita */
+    align-items: flex-start;
+    transition: all 0.2s;
+    padding: 10px 0; /* Espaço vertical */
+    border-bottom: 2px solid #2563eb; /* A borda veio do h4 para aqui (fica larga) */
+    margin-bottom: 15px; /* A margem veio do h4 para aqui */
+}
+
+.conteudo-group-header h4 {
+    color: #f8fafc;
+    font-weight: 700;
+    margin-bottom: 0; /* IMPORTANTE: Retira a margem para não desalinhar o flex */
+    transition: color 0.2s;
+}
+
+/* Efeito de hover no título */
+.conteudo-group-header:hover h4 {
+    color: #2563eb;
+}
+
+/* Ícone do olho (direita) */
+.toggle-icon {
+    color: #94a3b8;
+    font-size: 1.2rem;
+    margin-top: 5px; /* Alinha visualmente com o texto do h4 */
+    transition: color 0.2s;
+}
+
+/* Efeito de hover no olho */
+.conteudo-group-header:hover .toggle-icon {
+    color: #f8fafc;
+}
+
+/* Contentor dos itens (escondido por defeito) */
+.group-content-wrapper {
+    display: none; 
+    padding-top: 10px;
+}
+
+
+/* Lista de Itens (PDFs, ZIPs, Links) */
+.conteudo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.conteudo-list li {
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #243249;
+    transition: all 0.2s;
+}
+.conteudo-list li:hover {
+    background-color: rgba(37, 99, 235, 0.05);
+    padding-left: 8px;
+}
+.conteudo-list li:last-child {
+    border-bottom: none;
+}
+.item-num {
+    color: #2563eb;
+    font-weight: 700;
+    margin-right: 15px;
+    min-width: 25px;
+}
+.item-link {
+    color: #f8fafc;
+    text-decoration: none;
+    flex-grow: 1;
+    font-weight: 500;
+}
+.item-link:hover {
+    color: #2563eb;
+}
+.item-date {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-left: 15px;
+    white-space: nowrap;
+}
+
+/* Ícones específicos por tipo de ficheiro */
+.icon-pdf { color: #ef4444; margin-right: 10px; }
+.icon-zip { color: #f59e0b; margin-right: 10px; }
+.icon-link { color: #10b981; margin-right: 10px; }
+
+/* Container de Vídeos (YouTube e Locais) - Proporção 16:9 */
+.media-embed-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 10px;
+    background-color: #000;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+.media-embed-container iframe,
+.media-embed-container video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+.media-title {
+    color: #cbd5e1;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* Imagem Solta (Única) */
+.single-image-container {
+    text-align: center;
+    margin: 25px 0;
+}
+.single-image-container img {
+    max-width: 80%;
+    max-height: 500px;
+    object-fit: contain; /* 'contain' em vez de 'cover' para não cortar a imagem */
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+.single-image-caption {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-top: 12px;
+    font-style: italic;
+}
+/* --- Miniatura de Música/Vídeo --- */
+.media-thumb {
+    width: 45px;
+    height: 45px;
+    object-fit: cover; /* Garante que a imagem não fica distorcida */
+    border-radius: 4px;
+    margin-right: 12px;
+    flex-shrink: 0; /* Impede que a imagem encolha em ecrãs pequenos */
+}
+/* --- Capítulos / Separadores do Hub --- */
+.hub-chapter {
+    color: #10b981; /* Verde de destaque */
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 2px solid #10b981;
+    padding-bottom: 10px;
+    margin-top: 40px;
+    margin-bottom: 25px;
+}
+.hub-chapter:first-of-type {
+    margin-top: 10px; /* O primeiro capítulo não precisa de afastar-se muito do topo */
+}
+.hub-chapter i {
+    margin-right: 10px;
+}
+/* =========================================
+   FICHAS DE CINEMA (Cards Horizontais)
+   ========================================= */
+.filme-card {
+    display: flex;
+    background-color: #1a2332; /* Fundo do teu content-box */
+    border: 1px solid #243249;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.filme-card:hover {
+    transform: translateY(-3px); /* Levanta ligeiramente ao passar o rato */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+.filme-poster {
+    width: 120px;
+    aspect-ratio: 2 / 3; /* O SEGREDO: Força a proporção exata de um cartaz de cinema */
+    object-fit: cover; /* Corta apenas as sobras laterais, sem esticar */
+    flex-shrink: 0; /* Impede que a imagem encolha */
+    border-radius: 4px 0 0 4px; /* Arredonda apenas o canto esquerdo para ficar bonito colado à borda do card */
+}
+.filme-info {
+    padding: 15px;
+    flex-grow: 1; /* Ocupa o resto do espaço */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.filme-titulo {
+    color: #f8fafc;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+.filme-sinopse {
+    color: #cbd5e1; /* Texto secundário mais claro para ler bem */
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+.filme-action {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+.btn-trailer {
+    background-color: #ef4444; /* Vermelho YouTube */
+    color: white;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+.btn-trailer:hover {
+    background-color: #dc2626;
+    color: white;
+}
+
+/* Responsividade: No telemóvel, o cartaz fica em cima */
+@media (max-width: 576px) {
+    .filme-card {
+        flex-direction: column;
+    }
+    .filme-poster {
+        width: 100%;
+        height: 200px;
+    }
+    .filme-action {
+        padding-top: 0;
+        justify-content: flex-end;
+    }
 }

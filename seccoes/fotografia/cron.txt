@@ -1,0 +1,16 @@
+Tornar isto verdadeiramente "Autónomo" (Cron)
+
+Para que não tenhas de executar o script manualmente,
+vamos dizer ao Debian para o correr sozinho (por exemplo, a cada 5 minutos).
+
+No terminal, escreve:
+bash
+crontab -e
+
+(Se perguntar qual editor, escolhe o nano - opção 1).
+Vai até ao fundo do ficheiro e adiciona esta linha:
+text
+
+*/5 * * * * /home/paulo/gerar_listas_fotos.sh >> /var/log/gerar_fotos.log 2>&1
+ 
+Guarda e sai. 

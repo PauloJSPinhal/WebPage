@@ -28,10 +28,10 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item"><a class="nav-link-custom active" href="#inicio">Início</a></li>
-                    <li class="nav-item"><a class="nav-link-custom" href="#" data-target="ensino">Ensino EVT</a></li>
+                    <li class="nav-item"><a class="nav-link-custom" href="#" data-target="ensino">Ensino</a></li>
                     <li class="nav-item"><a class="nav-link-custom" href="#" data-target="engenharia">Engenharia</a></li>
                     <li class="nav-item"><a class="nav-link-custom" href="#" data-target="fotografia">Fotografia</a></li>
-                    <li class="nav-item"><a class="nav-link-custom" href="#" data-target="cultura">Cultura & Hobbies</a></li>
+                    <li class="nav-item"><a class="nav-link-custom" href="#" data-target="cultura">Cultura e Interesses</a></li>
                     <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
                         <a class="btn-login" href="#contacto"><i class="fa-solid fa-envelope me-2"></i>Contacto</a>
                     </li>
@@ -101,10 +101,10 @@
     <!-- SECÇÕES EXPANSÍVEIS (ACORDION / LINHAS DINÂMICAS) -->
     <main class="container my-5">
 
-        <!-- Secção 1: Ensino EVT -->
+        <!-- Secção 1: Ensino -->
         <div class="section-row" id="row-ensino">
             <div class="section-header" data-target="ensino">
-                <span class="section-title"><i class="fa-solid fa-graduation-cap me-3"></i>Ensino de EVT</span>
+                <span class="section-title"><i class="fa-solid fa-graduation-cap me-3"></i>Ensino</span>
                 <i class="fa-solid fa-chevron-down arrow-icon"></i>
             </div>
             <div class="section-content" id="content-ensino">
@@ -115,7 +115,7 @@
         <!-- Secção 2: Engenharia -->
         <div class="section-row" id="row-engenharia">
             <div class="section-header" data-target="engenharia">
-                <span class="section-title"><i class="fa-solid fa-bolt me-3"></i>Engenharia Eletrotécnica & Telecomunicações</span>
+                <span class="section-title"><i class="fa-solid fa-bolt me-3"></i>Engenharia (Eletrotécnica & Telecomunicações)</span>
                 <i class="fa-solid fa-chevron-down arrow-icon"></i>
             </div>
             <div class="section-content" id="content-engenharia">
@@ -137,7 +137,7 @@
         <!-- Secção 4: Cultura -->
         <div class="section-row" id="row-cultura">
             <div class="section-header" data-target="cultura">
-                <span class="section-title"><i class="fa-solid fa-film me-3"></i>Cultura, Cinema & Música</span>
+                <span class="section-title"><i class="fa-solid fa-film me-3"></i>Cultura e Interesses</span>
                 <i class="fa-solid fa-chevron-down arrow-icon"></i>
             </div>
             <div class="section-content" id="content-cultura">
@@ -156,8 +156,8 @@
                 <label class="form-label d-block fw-bold mb-3">Selecione o Assunto (Obrigatório):</label>
                 <div class="row g-3">
                     <div class="col-sm-6 col-md-3">
-                        <input class="form-check-input-custom d-none" type="radio" name="assuntoCategoria" id="radioEnsino" value="Ensino EVT" required>
-                        <label class="form-check-label-custom w-100 text-center" for="radioEnsino">Ensino EVT</label>
+                        <input class="form-check-input-custom d-none" type="radio" name="assuntoCategoria" id="radioEnsino" value="Ensino" required>
+                        <label class="form-check-label-custom w-100 text-center" for="radioEnsino">Ensino</label>
                     </div>
                     <div class="col-sm-6 col-md-3">
                         <input class="form-check-input-custom d-none" type="radio" name="assuntoCategoria" id="radioEngenharia" value="Engenharia">
@@ -211,10 +211,23 @@
         <button onclick="changePhoto(1)" style="position:absolute; right:20px; background:none; border:none; color:white; font-size:50px; cursor:pointer;">&#10095;</button>
     </div>
 
-    <!-- Scripts Obrigatórios: jQuery primeiro, depois Bootstrap e script customizado -->
+    <!-- Scripts Obrigatórios: jQuery primeiro, depois Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script para carregar galerias de fotografias -->
     <script src="scripts/fotografias.js"></script>
+    <!-- Script para carregar conteúdos diversos:
+     [PDF] (Lista com data)
+    [YOUTUBE] (Vídeo responsivo)
+    [VIDEO] (Vídeo local)
+    [LINK] (Botão para fora)
+    [IMG] (Foto solta ou Grelha com Lightbox automático)
+    [ZIP] (Download direto)
+    -->
+    <script src="scripts/conteudos.js?v=3"></script>
+    <!-- Script principal para interatividade geral -->
     <script type="module" src="scripts/main.js"></script>
 </body>
 </html>
+
+    

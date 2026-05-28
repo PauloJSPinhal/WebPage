@@ -9,7 +9,7 @@
 
     const loadedSections = {};
 
-    function openSection(targetId) {
+        function openSection(targetId) {
         const $row = $('#row-' + targetId);
         const $content = $('#content-' + targetId);
 
@@ -36,16 +36,25 @@
                     // Marca como carregada para não repetir o AJAX da próxima vez
                     loadedSections[targetId] = true;
 
-                    // Se for a fotografia, inicializa TODAS as galerias que existirem
-                    if (targetId === 'fotografia') {
-                        // querySelectorAll vai buscar TODAS as divs com essa classe
-                                                const containers = document.querySelectorAll('#content-fotografia .master-galeria-container');
-                        containers.forEach(container => {
-                            if (window.carregarGaleria) {
-                                window.carregarGaleria(container);
-                            }
-                        });
-                    }
+                    // ==========================================
+                    // INICIALIZAÇÃO AUTOMÁTICA DOS MOTORES
+                    // ==========================================
+                    
+                    // 1. Procura Galerias de Fotos e ativa o motor fotografias.js
+                    $content.find('.master-galeria-container').each(function() {
+                        if (window.carregarGaleria) {
+                            window.carregarGaleria(this);
+                        }
+                    });
+
+                    // 2. Procura Conteúdos Dinâmicos e ativa o motor conteudos.js
+                    $content.find('.conteudo-dinamico-container').each(function() {
+                        if (window.carregarConteudoDinamico) {
+                            window.carregarConteudoDinamico(this);
+                        }
+                    });
+
+                    // ==========================================
 
                     // Ativa os botões de fechar e voltar ao topo
                     bindActionButtons(targetId);

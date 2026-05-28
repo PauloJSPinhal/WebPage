@@ -31,6 +31,10 @@ window.changePhoto = changePhoto;
 function carregarGaleria(masterContainer) {
     const listaUrl = masterContainer.getAttribute('data-lista');
     const pastaOrigem = masterContainer.getAttribute('data-pasta');
+    
+    // Ir buscar o título e descrição do HTML
+    const titulo = masterContainer.getAttribute('data-titulo');
+    const descricao = masterContainer.getAttribute('data-descricao');
 
     if (!listaUrl || !pastaOrigem) {
         masterContainer.innerHTML = '<p class="text-danger">Erro: Falta definir data-lista ou data-pasta.</p>';
@@ -45,93 +49,64 @@ function carregarGaleria(masterContainer) {
             return response.text();
         })
         .then(texto => {
-            const linhas = texto.split('\n');
-            const galerias = []; // Vai guardar os grupos de fotos
-            
-            let tituloAtual = '';
-            let descAtual = '';
-            let fotosAtuais = [];
+            const fotos = texto.split('\n').filter(i => i.trim() !== "");
+            masterContainer.innerHTML = ''; 
 
-            // 1. PARSE: Ler o ficheiro de texto e agrupar
-            linhas.forEach(linha => {
-                const trimLinha = linha.trim();
+            // 1. CABEÇALHO (Reaproveita as classes do conteudos.js)
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'conteudo-group-header';
+            headerDiv.innerHTML = `
+                <div>
+                    <h4><i class="fa-solid fa-folder-closed me-2"></i>${titulo || 'Galeria'}</h4>
+                    ${descricao ? `<p style="margin-top:5px;">${descricao}</p>` : ''}
+                </div>
+                <i class="fa-solid fa-eye-slash toggle-icon"></i>
+            `;
+
+            // 2. CONTENTOR DOS ITENS (Fica escondido por defeito via CSS)
+            const contentWrapper = document.createElement('div');
+            contentWrapper.className = 'group-content-wrapper';
+
+            // 3. GRELHA DE FOTOS (Dentro do contentor escondido)
+            const grid = document.createElement('div');
+            grid.className = 'row g-3 gallery';
+
+            fotos.forEach((foto, index) => {
+                const col = document.createElement('div');
+                col.className = 'col-md-4 col-sm-6';
                 
-                // Ignora linhas vazias ou comentários
-                if (trimLinha === '' || trimLinha.startsWith('//')) return;
-
-                if (trimLinha.startsWith('#')) {
-                    // Se já tinha fotos guardadas, guarda o grupo anterior antes de começar um novo
-                    if (fotosAtuais.length > 0) {
-                        galerias.push({ titulo: tituloAtual, desc: descAtual, fotos: fotosAtuais });
-                        fotosAtuais = [];
-                    }
-                    tituloAtual = trimLinha.substring(1).trim();
-                    descAtual = '';
-                } 
-                else if (trimLinha.startsWith('>')) {
-                    // Adiciona a descrição (permite múltiplas linhas de descrição)
-                    descAtual += (descAtual ? '<br>' : '') + trimLinha.substring(1).trim();
-                } 
-                else if (trimLinha === '---') {
-                    // Separador explícito de galerias
-                    if (fotosAtuais.length > 0) {
-                        galerias.push({ titulo: tituloAtual, desc: descAtual, fotos: fotosAtuais });
-                        fotosAtuais = [];
-                        tituloAtual = '';
-                        descAtual = '';
-                    }
-                } 
-                else {
-                    // É o nome de uma imagem
-                    fotosAtuais.push(trimLinha);
-                }
-            });
-            // Guarda o último grupo após sair do loop
-            if (fotosAtuais.length > 0) {
-                galerias.push({ titulo: tituloAtual, desc: descAtual, fotos: fotosAtuais });
-            }
-
-            // 2. RENDER: Desenhar o HTML na página
-            masterContainer.innerHTML = ''; // Limpa o "A carregar..."
-
-            galerias.forEach(gal => {
-                // Cria a div da galeria
-                const galDiv = document.createElement('div');
-                galDiv.className = 'galeria-container mb-5';
-
-                // Cria o Cabeçalho (Título e Descrição)
-                if (gal.titulo || gal.desc) {
-                    const header = document.createElement('div');
-                    header.className = 'gallery-header';
-                    if (gal.titulo) header.innerHTML += `<h4>${gal.titulo}</h4>`;
-                    if (gal.desc) header.innerHTML += `<p>${gal.desc}</p>`;
-                    galDiv.appendChild(header);
-                }
-
-                // Cria a Grelha de Fotos
-                const grid = document.createElement('div');
-                grid.className = 'row g-3 gallery';
-
-                gal.fotos.forEach((foto, index) => {
-                    const col = document.createElement('div');
-                    col.className = 'col-md-4 col-sm-6';
-                    
-                    const img = document.createElement('img');
-                    img.src = pastaOrigem + foto;
-                    img.className = 'img-fluid rounded';
-                    img.style.cursor = "pointer";
-                    
-                    // Evento de clique (passa APENAS as fotos deste grupo específico para o Lightbox)
-                    img.addEventListener('click', () => {
-                        openLightbox(index, gal.fotos, pastaOrigem);
-                    });
-
-                    col.appendChild(img);
-                    grid.appendChild(col);
+                const img = document.createElement('img');
+                img.src = pastaOrigem + foto;
+                img.className = 'img-fluid rounded';
+                img.style.cursor = "pointer";
+                
+                img.addEventListener('click', () => {
+                    openLightbox(index, fotos, pastaOrigem);
                 });
 
-                galDiv.appendChild(grid);
-                masterContainer.appendChild(galDiv);
+                col.appendChild(img);
+                grid.appendChild(col);
+            });
+
+            // Montar a estrutura final
+            contentWrapper.appendChild(grid);
+            masterContainer.appendChild(headerDiv);
+            masterContainer.appendChild(contentWrapper);
+
+            // 4. AÇÃO DE CLIQUE (Lógica idêntica ao conteudos.js)
+            $(headerDiv).on('click', function() {
+                const icon = $(this).find('.toggle-icon');
+                const folderIcon = $(this).find('h4 i');
+                
+                $(contentWrapper).slideToggle(300);
+                
+                if ($(contentWrapper).is(':visible')) {
+                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
+                    folderIcon.removeClass('fa-folder-closed').addClass('fa-folder-open');
+                } else {
+                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
+                    folderIcon.removeClass('fa-folder-open').addClass('fa-folder-closed');
+                }
             });
 
         })

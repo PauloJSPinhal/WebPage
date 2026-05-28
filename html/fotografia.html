@@ -1,4 +1,54 @@
-<div class="master-galeria-container" 
-     data-lista="/webpage/images/fotos/lista.txt" 
-     data-pasta="/webpage/images/fotos/">
+<!-- Cabeçalho Introdutório (Estilo ensino.html) -->
+<div class="row mb-4">
+    <div class="col-md-7">
+        <h4 class="text-primary mb-3">A Arte de Capturar o Instante</h4>
+        <p>A fotografia é muito mais do que um simples hobby para mim; é uma forma de ver e interpretar o mundo que me rodeia. Através da lente, procuro a luz perfeita, as texturas escondidas e os momentos efémeros que, de outra forma, passariam despercebidos.</p>
+        <p>Cada clique é um exercício de paciência, composição e sensibilidade artística, unindo a técnica ao sentimento.</p>
+        
+        <h5 class="mt-4 mb-2 text-white">Géneros Preferidos:</h5>
+        <div class="mb-3">
+            <span class="badge-tech">Paisagem</span>
+            <span class="badge-tech">Fotografia Noturna</span>
+            <span class="badge-tech">Street Photography</span>
+            <span class="badge-tech">Arquitetura</span>
+            <span class="badge-tech">Astrofotografia</span>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <div class="content-box">
+            <h5 class="text-white mb-3"><i class="fa-solid fa-camera-retro me-2 text-warning"></i>O Meu Portfólio</h5>
+            <p class="small text-muted">Os dois módulos abaixo ("Últimas Fotografias" e "Fotografias Favoritas") representam uma mostra direta do meu trabalho mais recente e daquele que mais me orgulha, servindo como um espaço de destaque neste portfólio geral.</p>
+            <p class="small text-muted mb-3">No entanto, o meu arquivo completo, com séries temáticas, projetos de longa duração e o meu blog fotográfico, encontra-se alojado no meu website dedicado:</p>
+            
+            <!-- Botão reutilizando a tua classe verde do CSS -->
+            <a href="http://paulopinhal.pt/fotografia" target="_blank" class="btn-login d-block text-center" style="text-decoration: none;">
+                <i class="fa-solid fa-arrow-up-right-from-square me-2"></i>Ver Site de Fotografia
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Linha separadora antes das galerias -->
+<hr style="border-color: #243249; margin: 30px 0;">
+
+<!-- Categoria 1: Últimas Fotografias -->
+<div class="master-galeria-container mb-5" 
+     data-titulo="Últimas Fotografias" 
+     data-descricao="Os registos mais recentes capturados com a minha equipa."
+     data-lista="/webpage/seccoes/fotografia/lista-ultimas.txt" 
+     data-pasta="/webpage/seccoes/fotografia/ultimas/">
+</div>
+
+<!-- Categoria 2: Fotografias Favoritas -->
+<div class="master-galeria-container mb-5" 
+     data-titulo="Fotografias Favoritas" 
+     data-descricao="Uma seleção pessoal das minhas melhores imagens de sempre."
+     data-lista="/webpage/seccoes/fotografia/lista-favoritas.txt" 
+     data-pasta="/webpage/seccoes/fotografia/favoritas/">
+</div>
+
+<!-- Botões de Ação Obrigatórios -->
+<div class="section-actions">
+    <button class="btn-action-close"><i class="fa-solid fa-xmark me-2"></i>Fechar Secção</button>
+    <button class="btn-action-top"><i class="fa-solid fa-arrow-up me-2"></i>Topo</button>
 </div>
